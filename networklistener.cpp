@@ -2,6 +2,7 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QCoreApplication>
+#include <QTimer>
 #ifdef Q_WS_X11
 #include <QDBusInterface>
 #include <QDBusConnection>
@@ -9,7 +10,7 @@
 #endif
 
 NetworkListener::NetworkListener(QObject *parent) :
-    QObject(parent), mPort(9095)
+    QObject(parent), mPort(9095), mSuspendDelay(1000)
 {
     mServer = new QTcpServer(this);
     connect(mServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
@@ -60,8 +61,21 @@ void NetworkListener::onNewConnection()
           "\r\n"
           "<h1>Suspending HTPC..."
        << "\n";
+    socket->flush();
     socket->close();
+    /* Delay suspending so there's time for the HTML page to show */
+    QTimer::singleShot(mDelay, this, SLOT(suspendPc()));
+}
+
+void NetworkListener::setDelay(int delay)
+{
+    mSuspendDelay = delay;
+}
+
+void NetworkListener::suspendPc()
+{
 #ifdef Q_WS_X11
+
     QDBusInterface("org.freedesktop.UPower", "/org/freedesktop/UPower",
                    "org.freedesktop.UPower",
                    QDBusConnection::systemBus()).call(QLatin1String("Suspend"));

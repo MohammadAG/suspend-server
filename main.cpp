@@ -21,6 +21,7 @@ void print_usage()
     stream << "-h   --help       Show this help screen" << endl;
     stream << "-v   --version    Print application name and version" << endl;
     stream << "-p   --port       Change port used by server (default: 9095)" << endl;
+    stream << "-d   --delay      Delay in ms after which this machine should be suspended" << endl;
     stream << "\n";
 }
 
@@ -40,6 +41,14 @@ int main(int argc, char *argv[])
                 listener.setPort(portNum.toInt());
             } else {
                 qDebug() << "Error: You must supply a port number";
+                return EXIT_FAILURE;
+            }
+        } else if (arg == "-d" || arg == "--delay") {
+            if (list.size() >= i+2) {
+                QString delayMs = list.at(i+1);
+                listener.setDelay(delayMs.toInt());
+            } else {
+                qDebug() << "Error: You must a delay in ms";
                 return EXIT_FAILURE;
             }
         } else if (arg == "-h" || arg == "--help") {

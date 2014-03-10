@@ -15,11 +15,13 @@ public:
 private:
     QTcpServer *mServer;
     qint32 mPort;
+    qint32 mSuspendDelay;
 
 public:
     void setPort(int port, bool shouldStartListening = false);
     bool startListening();
     void stopListening();
+    void setDelay(int delay);
 
 signals:
 
@@ -27,6 +29,7 @@ public slots:
 
 private slots:
     void onNewConnection();
+    void suspendPc();
 };
 
 #endif // NETWORKLISTENER_H
