@@ -18,7 +18,7 @@ private:
 
 public:
     void setPort(int port, bool shouldStartListening = false);
-    void startListening();
+    bool startListening();
     void stopListening();
 
 signals:

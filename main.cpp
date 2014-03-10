@@ -54,6 +54,8 @@ int main(int argc, char *argv[])
     QTextStream stream(stdout, QIODevice::WriteOnly);
     stream << "\n";
 
-    listener.startListening();
-    return a.exec();
+    if (listener.startListening())
+        return a.exec();
+    else
+        return EXIT_FAILURE;
 }

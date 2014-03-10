@@ -20,8 +20,9 @@ NetworkListener::~NetworkListener()
     mServer->close();
 }
 
-void NetworkListener::startListening() {
-    if (!mServer->listen(QHostAddress::Any, mPort)) {
+bool NetworkListener::startListening() {
+    bool success = mServer->listen(QHostAddress::Any, mPort);
+    if (!success) {
         qDebug() << "Failed to listen at port " + QString::number(mPort);
         qDebug() << "Error: " << mServer->serverError();
         mServer->close();
@@ -29,6 +30,8 @@ void NetworkListener::startListening() {
     } else {
         qDebug() << "Started listening on port " + QString::number(mPort);
     }
+
+    return success;
 }
 
 void NetworkListener::stopListening()
