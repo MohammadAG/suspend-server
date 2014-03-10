@@ -64,7 +64,7 @@ void NetworkListener::onNewConnection()
     socket->flush();
     socket->close();
     /* Delay suspending so there's time for the HTML page to show */
-    QTimer::singleShot(mDelay, this, SLOT(suspendPc()));
+    QTimer::singleShot(mSuspendDelay, this, SLOT(suspendPc()));
 }
 
 void NetworkListener::setDelay(int delay)
