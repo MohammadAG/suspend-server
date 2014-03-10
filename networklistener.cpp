@@ -58,7 +58,7 @@ void NetworkListener::onNewConnection()
     os << "HTTP/1.0 200 Ok\r\n"
           "Content-Type: text/html; charset=\"utf-8\"\r\n"
           "\r\n"
-          "<h1>Suspending HTPC, wake it up by clicking <a href=http://mohammadag.xceleo.org/wol.php>here</a></h1>\n"
+          "<h1>Suspending HTPC..."
        << "\n";
     socket->close();
 #ifdef Q_WS_X11
