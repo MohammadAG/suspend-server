@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QStringList>
 
 #include "networklistener.h"
 
